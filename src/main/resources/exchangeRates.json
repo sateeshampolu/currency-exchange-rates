@@ -1,0 +1,9 @@
+[{"baseCurrency":"EUR","date":"2020-03-30","rates":[{"currency":"HKD","rate":0.11},{"currency":"GBP","rate":1.031},{"currency":"USD","rate":0.961}]},
+  {"baseCurrency":"EUR","date":"2020-02-29","rates":[{"currency":"HKD","rate":0.123},{"currency":"GBP","rate":1.033},{"currency":"USD","rate":0.951}]},
+  {"baseCurrency":"EUR","date":"2020-01-30","rates":[{"currency":"HKD","rate":0.122},{"currency":"GBP","rate":1.034},{"currency":"USD","rate":0.962}]},
+  {"baseCurrency":"EUR","date":"2019-12-30","rates":[{"currency":"HKD","rate":0.124},{"currency":"GBP","rate":1.035},{"currency":"USD","rate":0.953}]},
+  {"baseCurrency":"EUR","date":"2019-11-30","rates":[{"currency":"HKD","rate":0.121},{"currency":"GBP","rate":1.037},{"currency":"USD","rate":0.913}]},
+  {"baseCurrency":"EUR","date":"2019-10-30","rates":[{"currency":"HKD","rate":0.125},{"currency":"GBP","rate":1.033},{"currency":"USD","rate":0.923}]},
+  {"baseCurrency":"EUR","date":"2019-09-30","rates":[{"currency":"HKD","rate":0.122},{"currency":"GBP","rate":1.035},{"currency":"USD","rate":0.941}]},
+  {"baseCurrency":"EUR","date":"2019-08-30","rates":[{"currency":"HKD","rate":0.121},{"currency":"GBP","rate":1.032},{"currency":"USD","rate":0.921}]}
+]

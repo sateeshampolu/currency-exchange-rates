@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Previous Exchange Rates</title>
+</head>
+<body>
+<h1>
+     Exchange rates for previous <span th:text="${data.size()}"/> months for the same day
+</h1>
+<table border="1">
+    <thead>
+
+    <tr>
+        <th>Currency</th>
+        <th th:each="row: ${data}"> <span th:text="${row.date.getMonth().name() + ' '+ row.date.getYear()}"/> </th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <div th:with="currList = ${ {'GBP', 'USD', 'HKD'} }">
+
+    <tr th:each="currency: ${currList}">
+        <td ><span th:text="${currency}"/></td>
+        <div th:each="row : ${data}">
+
+        <td ><span th:text="${row.rates.get(currency)}"/></td>
+        </div>
+    </tr>
+        </div>
+    </div>
+    </div>
+    </tbody>
+    </div>
+</table><br>
+<form th:action="@{/logout}" method="post">
+    <div><input size="20" type="submit" value="Sign Out" /></div>
+</form>
+</body>
+</html>

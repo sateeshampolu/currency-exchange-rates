@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Latest Exchange Rates</title>
+</head>
+<body>
+<h1>
+    Exchange rates against <span th:text="${data.base}"/> for today
+</h1>
+
+<table border="1">
+    <div th:object="${data.rates}">
+    <thead>
+
+    <tr>
+        <th>Currency</th>
+        <th>Today</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="rate : ${data.rates}">
+        <td ><span th:text="${rate.key}"/></td>
+        <td ><span th:text="${rate.value}"/></td>
+    </tr>
+    </tbody>
+    </div>
+</table><br>
+<form th:action="@{/previousRates}" method="post">
+    <div><input size="20" type="submit" value="Previous Rates" title="click for previous rates"/></div>
+</form>
+
+</body>
+</html>
