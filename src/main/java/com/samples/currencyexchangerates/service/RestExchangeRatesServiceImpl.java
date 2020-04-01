@@ -2,7 +2,7 @@ package com.samples.currencyexchangerates.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
@@ -12,7 +12,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
 
-@Component
+@Service
 public class RestExchangeRatesServiceImpl implements ExchangeRatesService {
 
     private final String latestRatesUrl;
