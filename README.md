@@ -2,6 +2,7 @@
 This api is to provide exchange rates against EUR for GBP, USD, HKD.
 It uses in memory mongo db and the values used are not real.
 The api has rest endpoints exposed as well as basic UI pages to view the exchange rates
+The api uses spring internal caching to cache the previous exchange rates
 ### Local Running
 Needs java 8
 
