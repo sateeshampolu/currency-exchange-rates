@@ -2,8 +2,8 @@ package com.samples.currencyexchangerates.service;
 
 import com.samples.currencyexchangerates.exceptions.NotFoundException;
 import com.samples.currencyexchangerates.repository.CurrencyRate;
-import com.samples.currencyexchangerates.repository.ExchangeRatesRepository;
 import com.samples.currencyexchangerates.repository.ExchangeRateEntity;
+import com.samples.currencyexchangerates.repository.ExchangeRatesRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -20,22 +20,19 @@ public class MongoExchangeRatesImpl implements ExchangeRatesService {
 
     private final String defaultBaseCurrency;
     private final List<String> defaultSymbols;
-    private final int defaultNoOfMonths;
     private final ExchangeRatesRepository exchangeRatesRepository;
 
     public MongoExchangeRatesImpl(@Value("${defaultBaseCurrency:EUR}") String defaultBaseCurrency,
                                   @Value("#{'${defaultBaseCurrency:GBP,USD,HKD}'.split(',')}") List<String> symbols,
-                                  @Value("${defaultNoOfMonths:6}") int defaultNoOfMonths,
                                   ExchangeRatesRepository exchangeRatesRepository) {
         this.defaultBaseCurrency = defaultBaseCurrency;
         this.exchangeRatesRepository = exchangeRatesRepository;
         this.defaultSymbols = symbols;
-        this.defaultNoOfMonths = defaultNoOfMonths;
     }
 
     @Override
-    public ExchangeRate getLatestExchangeRates(LocalDate date) {
-        List<ExchangeRate> exchangeRates = getLatestExchangeRates(defaultBaseCurrency, date, defaultSymbols);
+    public ExchangeRate getLatestExchangeRates() {
+        List<ExchangeRate> exchangeRates = getLatestExchangeRates(defaultBaseCurrency, LocalDate.now(), defaultSymbols);
         return exchangeRates.get(0);
     }
 
@@ -50,8 +47,13 @@ public class MongoExchangeRatesImpl implements ExchangeRatesService {
     }
 
     @Override
-    public List<ExchangeRate> getPreviousExchangeRates(LocalDate date) {
-        return getPreviousExchangeRates(defaultBaseCurrency, date, defaultNoOfMonths, defaultSymbols);
+    public List<ExchangeRate> getPreviousExchangeRates(LocalDate date, int noOfMonths) {
+        return getPreviousExchangeRates(defaultBaseCurrency, date, noOfMonths, defaultSymbols);
+    }
+
+    @Override
+    public ExchangeRate getPreviousExchangeRate(String date) {
+        return null;
     }
 
 

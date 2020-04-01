@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.type.CollectionType;
 import com.samples.currencyexchangerates.repository.ExchangeRateEntity;
 import com.samples.currencyexchangerates.repository.ExchangeRatesRepository;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -22,7 +21,7 @@ import java.util.stream.Stream;
 
 
 @Component
-public class MongoInitialDataLoader implements CommandLineRunner {
+public class MongoInitialDataLoader  {
 
     private static ObjectMapper objectMapper = new ObjectMapper();
     private final ExchangeRatesRepository exchangeRatesRepository;
@@ -64,7 +63,6 @@ public class MongoInitialDataLoader implements CommandLineRunner {
         return data;
     }
 
-    @Override
     public void run(String... args) throws Exception {
         loadInitialData();
     }

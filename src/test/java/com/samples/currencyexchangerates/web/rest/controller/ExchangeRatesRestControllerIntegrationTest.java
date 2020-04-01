@@ -16,7 +16,7 @@ import java.time.LocalDate;
 
 import static com.samples.currencyexchangerates.TestMockDataUtils.getLatestExchangeRates;
 import static com.samples.currencyexchangerates.TestMockDataUtils.getPreviousExchangeRates;
-import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -27,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ExchangeRatesRestControllerIntegrationTest {
     private static final String LATEST_END_POINT = "/api/latest";
     private static final String PREVIOUS_END_POINT = "/api/previous";
+    private static final int EXPECTED_NO_OF_MONTHS = 2;
 
     @Autowired
     private MockMvc mockMvc;
@@ -57,11 +58,11 @@ class ExchangeRatesRestControllerIntegrationTest {
     }
 
     private void givenLatestExchangeRates() {
-        doReturn(getLatestExchangeRates()).when(exchangeRatesService).getLatestExchangeRates(currentDate);
+        when(exchangeRatesService.getLatestExchangeRates()).thenReturn(getLatestExchangeRates());
     }
 
     private void givenPreviousExchangeRates() {
-        doReturn(getPreviousExchangeRates()).when(exchangeRatesService).getPreviousExchangeRates(currentDate);
+        when(exchangeRatesService.getPreviousExchangeRates(currentDate, EXPECTED_NO_OF_MONTHS)).thenReturn(getPreviousExchangeRates());
     }
 
     private void whenLatestExchangeRatesEndPointIsAccessed() throws Exception {

@@ -4,6 +4,7 @@ import com.samples.currencyexchangerates.service.ExchangeRate;
 import com.samples.currencyexchangerates.service.ExchangeRatesService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +17,17 @@ import java.util.List;
 
 @Api("Api for providing exchange rates")
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api")
 public class ExchangeRatesRestController {
-    private final ExchangeRatesService exchangeRatesService;
+
+    private int defaultNoOfMonths;
+    private final ExchangeRatesService restExchangeRatesServiceImpl;
+
+    public ExchangeRatesRestController(@Value("${previousRates.defaultNoOfMonths:6}") int defaultNoOfMonths,
+                                       ExchangeRatesService restExchangeRatesServiceImpl) {
+        this.defaultNoOfMonths = defaultNoOfMonths;
+        this.restExchangeRatesServiceImpl = restExchangeRatesServiceImpl;
+    }
 
     @ApiOperation(value = "Provides exchange rates for USD,GBP,HKD against EUR for current date")
     @ApiResponses({
@@ -28,7 +36,7 @@ public class ExchangeRatesRestController {
     })
     @GetMapping("/latest")
     public ResponseEntity<ExchangeRate> getLatestExchangeRates() {
-        ExchangeRate exchangeRate = exchangeRatesService.getLatestExchangeRates(LocalDate.now());
+        ExchangeRate exchangeRate = restExchangeRatesServiceImpl.getLatestExchangeRates();
         return ResponseEntity.ok(exchangeRate);
     }
 
@@ -40,7 +48,7 @@ public class ExchangeRatesRestController {
     })
     @GetMapping("/previous/{date}")
     public ResponseEntity<List<ExchangeRate>> getPreviousExchangeRates(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        List<ExchangeRate> previousExchangeRates = exchangeRatesService.getPreviousExchangeRates(date);
+        List<ExchangeRate> previousExchangeRates = restExchangeRatesServiceImpl.getPreviousExchangeRates(date, defaultNoOfMonths);
         return ResponseEntity.ok(previousExchangeRates);
     }
 }

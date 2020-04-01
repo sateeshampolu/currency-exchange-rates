@@ -57,7 +57,7 @@ class MongoExchangeRatesImplTest {
 
     @BeforeEach
     void setUp(){
-        exchangeRatesService = new MongoExchangeRatesImpl(EUR, SYMBOLS, DEFAULT_NO_OF_MONTHS, exchangeRatesRepository);
+        exchangeRatesService = new MongoExchangeRatesImpl(EUR, SYMBOLS, exchangeRatesRepository);
     }
 
     @Test
@@ -106,12 +106,12 @@ class MongoExchangeRatesImplTest {
         doReturn(exchangeRateEntities).when(exchangeRatesRepository).findByBaseCurrencyAndDateIsInOrderByDateDesc(any(), any());
     }
     private void whenGetLatestExchangeRatesForADayIsCalled() {
-        resultExchangeRate = exchangeRatesService.getLatestExchangeRates(inputDate);
+        resultExchangeRate = exchangeRatesService.getLatestExchangeRates();
     }
 
 
     private void whenGetPreviousExchangeRatesIsCalled() {
-        resultExchangeRatesList = exchangeRatesService.getPreviousExchangeRates( inputDate);
+        resultExchangeRatesList = exchangeRatesService.getPreviousExchangeRates( inputDate, DEFAULT_NO_OF_MONTHS);
     }
 
     private void thenVerifyRatesAreReturnedForBaseEUROAndGivenDay() {

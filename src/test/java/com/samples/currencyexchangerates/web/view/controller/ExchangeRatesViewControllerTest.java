@@ -13,11 +13,12 @@ import java.time.LocalDate;
 
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ExchangeRatesViewControllerTest {
+    public static final int DEFAULT_NO_OF_MONTHS = 2;
     @Mock
     private ExchangeRate exchangeRate;
     @Mock
@@ -30,7 +31,7 @@ class ExchangeRatesViewControllerTest {
 
     @BeforeEach
     void setUp() {
-        exchangeRatesViewController = new ExchangeRatesViewController(exchangeRatesService);
+        exchangeRatesViewController = new ExchangeRatesViewController(DEFAULT_NO_OF_MONTHS, exchangeRatesService);
     }
 
     @Test
@@ -52,11 +53,11 @@ class ExchangeRatesViewControllerTest {
     }
 
     private void givenLatestExchangeRate() {
-        doReturn(exchangeRate).when(exchangeRatesService).getLatestExchangeRates(LocalDate.now());
+        when(exchangeRatesService.getLatestExchangeRates()).thenReturn(exchangeRate);
     }
 
     private void givenPreviousExchangeRate() {
-        doReturn(asList(exchangeRate)).when(exchangeRatesService).getPreviousExchangeRates(LocalDate.now());
+        when(exchangeRatesService.getPreviousExchangeRates(LocalDate.now(), DEFAULT_NO_OF_MONTHS)).thenReturn(asList(exchangeRate));
     }
 
     private void whenLatestExchangeRatesAreRetrieved() {
@@ -76,11 +77,11 @@ class ExchangeRatesViewControllerTest {
     }
 
     private void andVerifyExchangeRateServiceIsCalledForLatestRate() {
-        verify(exchangeRatesService).getLatestExchangeRates(LocalDate.now());
+        verify(exchangeRatesService).getLatestExchangeRates();
     }
 
     private void andVerifyExchangeRateServiceIsCalledForPreviousRates() {
-        verify(exchangeRatesService).getPreviousExchangeRates(LocalDate.now());
+        verify(exchangeRatesService).getPreviousExchangeRates(LocalDate.now(), DEFAULT_NO_OF_MONTHS);
     }
 
     private void andVerifyTheModelIsUpdatedWithCorrectDataForLatestRate() {

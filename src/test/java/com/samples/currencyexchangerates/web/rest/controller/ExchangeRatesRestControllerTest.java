@@ -14,13 +14,14 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
+import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ExchangeRatesRestControllerTest {
+    public static final int DEFAULT_NO_OF_MONTHS = 2;
     @Mock
     private ExchangeRate exchangeRate;
     @Mock
@@ -32,7 +33,7 @@ class ExchangeRatesRestControllerTest {
 
     @BeforeEach
     void setUp() {
-        exchangeRatesRestController = new ExchangeRatesRestController(exchangeRatesService);
+        exchangeRatesRestController = new ExchangeRatesRestController(DEFAULT_NO_OF_MONTHS, exchangeRatesService);
     }
 
     @Test
@@ -52,11 +53,11 @@ class ExchangeRatesRestControllerTest {
     }
 
     private void givenExchangeRatesForToday() {
-        doReturn(exchangeRate).when(exchangeRatesService).getLatestExchangeRates(any());
+        when(exchangeRatesService.getLatestExchangeRates()).thenReturn(exchangeRate);
     }
 
     private void givenPreviousExchangeRates() {
-        doReturn(Arrays.asList(exchangeRate)).when(exchangeRatesService).getPreviousExchangeRates(any());
+        when(exchangeRatesService.getPreviousExchangeRates(LocalDate.now(), DEFAULT_NO_OF_MONTHS)).thenReturn(asList(exchangeRate));
     }
 
     private void whenGetLatestExchangeRates() {
@@ -68,11 +69,11 @@ class ExchangeRatesRestControllerTest {
     }
 
     private void thenVerifyExchangeRatesServiceIsCalled() {
-        verify(exchangeRatesService).getLatestExchangeRates(LocalDate.now());
+        verify(exchangeRatesService).getLatestExchangeRates();
     }
 
     private void thenVerifyExchangeRatesServiceIsCalledForPreviousExchangeRates() {
-        verify(exchangeRatesService).getPreviousExchangeRates(LocalDate.now());
+        verify(exchangeRatesService).getPreviousExchangeRates(LocalDate.now(), DEFAULT_NO_OF_MONTHS);
     }
 
     private void andVerifyResponseIsReturned() {

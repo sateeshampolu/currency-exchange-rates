@@ -1,13 +1,11 @@
 package com.samples.currencyexchangerates;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
-@RequiredArgsConstructor
+@EnableCaching
 public class CurrencyExchangeRatesApplication {
 
     public static void main(String[] args) {
